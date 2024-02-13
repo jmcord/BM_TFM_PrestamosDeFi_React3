@@ -5,11 +5,11 @@ import Header from '../../Header'
 
 export default function AppLayout({ children }) {
   return (
-    <React.Fragment>
+    <>
       <Header />
       <main className="mx-auto min-h-[85vh]">{children}</main>
       <Footer />
-    </React.Fragment>
+    </>
   )
 }
 
