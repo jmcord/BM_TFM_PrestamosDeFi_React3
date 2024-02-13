@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextInput, Title } from './ui';
-import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useWaitForTransaction, useContractWrite } from 'wagmi';
 import { blockmakerTokenABI } from '../contracts/ABIs';
 
 
@@ -12,7 +12,7 @@ function AltaPrestamista2({ socioPrincipal }) {
     return /^(0x)?[0-9a-f]{40}$/i.test(address);
   };
 
-  const { config } = useWriteContract({
+  const { config } = useContractWrite({
     address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: blockmakerTokenABI,
     functionName: 'altaPrestamista',
@@ -20,13 +20,13 @@ function AltaPrestamista2({ socioPrincipal }) {
     signer: socioPrincipal // El socio principal firma la transacción
   });
 
-  const { data: writeData, write } = useWriteContract(config);
+  const { data: writeData, write } = useContractWrite(config);
 
   const {
     isLoading: isTransactionLoading,
     isSuccess: isTransactionSuccess,
     isError: isTransactionError
-  } = useWaitForTransactionReceipt({
+  } = useWaitForTransaction({
     hash: writeData?.hash
   });
 

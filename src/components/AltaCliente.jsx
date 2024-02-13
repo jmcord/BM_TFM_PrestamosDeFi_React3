@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextInput, Title } from './ui';
-import { useContractWrite, useWaitForTransactionReceipt } from 'wagmi';
+import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import { blockmakerTokenABI } from '../contracts/ABIs';
 
 function AltaCliente({ empleadoPrestamista }) {
@@ -25,7 +25,7 @@ function AltaCliente({ empleadoPrestamista }) {
     isLoading: isTransactionLoading,
     isSuccess: isTransactionSuccess,
     isError: isTransactionError
-  } = useWaitForTransactionReceipt({
+  } = useWaitForTransaction({
     hash: writeData?.hash
   });
 
