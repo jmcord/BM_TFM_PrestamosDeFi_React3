@@ -1,6 +1,7 @@
 import { WagmiConfig } from 'wagmi'
 import { ConnectKitProvider } from 'connectkit'
 import { config } from './config/wagmi'
+import { AppLayout } from './components/ui/layouts'
 
 function App() {
   return (
