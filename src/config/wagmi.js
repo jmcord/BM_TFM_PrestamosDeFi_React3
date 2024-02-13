@@ -8,7 +8,7 @@ export const config = createConfig(
     // Importamos la variable de entorno con import.meta.env
     alchemyId: import.meta.env.VITE_ALCHEMY_ID,
     walletConnectProjectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID,
-    appName: 'Blockmaker ERC20 DApp',
+    appName: 'Prestamos DeFi',
     // Configuramos la chain
     chains: [sepolia]
   })
