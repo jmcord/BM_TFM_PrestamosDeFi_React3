@@ -13,7 +13,7 @@ function AltaPrestamista2({ socioPrincipal }) {
   };
 
   const { config } = useContractWrite({
-    address: import.meta.env.VITE_CONTRACT_ADDRESS,
+    address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
     abi: blockmakerTokenABI,
     functionName: 'altaPrestamista',
     args: [nuevoPrestamista],
