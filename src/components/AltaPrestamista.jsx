@@ -1,86 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import { Button, TextInput, Title } from './ui';
-import { useContractWrite, useWaitForTransaction } from 'wagmi';
-import { blockmakerTokenABI } from '../contracts/ABIs';
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { blockmakerTokenABI } from '../contracts/ABIs'
+import { Button, TextInput, Title } from './ui'
 
-function AltaPrestamista({ socioPrincipal }) {
-  const [nuevoPrestamista, setNuevoPrestamista] = useState('');
-  const [error, setError] = useState('');
+export default function AltaPrestamista() {
+  const [to, setTo] = useState('')
+  const [amount, setAmount] = useState('')
 
-  // Función para validar la dirección Ethereum
-  const isValidAddress = (address) => {
-    return /^(0x)?[0-9a-f]{40}$/i.test(address);
-  };
+  const { config } = usePrepareContractWrite({
+    address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
+    abi: blockmakerTokenABI,
+    functionName: 'transfer',
+    enabled: to && amount > 0,
+    args: [to, BigInt(amount * 10 ** 18)]
+  })
 
-  // Configuración para escribir en el contrato
-  const { config } = useContractWrite({
-    address: import.meta.env.VITE_CONTRACT_ADDRESS, // Dirección del contrato
-    abi: blockmakerTokenABI, // ABI del contrato
-    functionName: 'altaPrestamista', // Función a llamar
-    args: [nuevoPrestamista], // Argumentos de la función
-    signer: socioPrincipal // El socio principal firma la transacción
-  });
+  const { data: writeData, write } = useContractWrite(config)
 
-  // Datos de la escritura del contrato
-  const { data: writeData, write } = useContractWrite(config);
-
-  // Estado de la transacción
   const {
     isLoading: isTransactionLoading,
     isSuccess: isTransactionSuccess,
     isError: isTransactionError
   } = useWaitForTransaction({
     hash: writeData?.hash
-  });
+  })
 
-  // Manejador para el cambio en el campo de la nueva dirección
-  const handleNuevoPrestamistaChange = (event) => {
-    setNuevoPrestamista(event.target.value);
-  };
+  const handleToInputChange = (e) => {
+    setTo(e.target.value)
+  }
 
-  // Manejador para el click en el botón de alta prestamista
-  const handleAltaPrestamistaClick = () => {
-    if (!isValidAddress(nuevoPrestamista)) {
-      setError('Por favor, introduce una dirección Ethereum válida');
-      return;
-    }
-    setError('');
-    write();
-  };
+  const handleAmountInputChange = (e) => {
+    setAmount(e.target.value)
+  }
 
-  // Efecto para limpiar el campo y mostrar mensajes en la consola
   useEffect(() => {
     if (isTransactionSuccess) {
-      setNuevoPrestamista('');
-      console.log('¡Transacción completada con éxito!');
+      toast.success('Se han transferido los tokens con éxito.')
+      setTo('')
+      setAmount('')
     }
     if (isTransactionError) {
-      console.log('¡Transacción fallida!');
+      toast.error('No se ha podido realizar la transacción. Prueba de nuevo más tarde.')
     }
-  }, [isTransactionSuccess, isTransactionError]);
+  }, [isTransactionSuccess, isTransactionError])
 
   return (
-    <section className="bg-white p-4 border shadow rounded-md">
-      <Title>Alta de Prestamista</Title>
-
+    <section className="p-4 bg-white border shadow rounded-lg text-sm w-[360px] sm:w-[469px]">
+      <div className="flex gap-1">
+        <Title>Transfer</Title>
+      </div>
       <form className="grid gap-4">
         <TextInput
           type="text"
-          placeholder="Dirección del nuevo prestamista"
-          value={nuevoPrestamista}
-          onChange={handleNuevoPrestamistaChange}
+          placeholder="To"
+          value={to}
+          disabled={isTransactionLoading}
+          onChange={handleToInputChange}
         />
-        {error && <p className="text-red-500">{error}</p>}
+        <TextInput
+          type="number"
+          placeholder="Amount"
+          value={amount}
+          disabled={isTransactionLoading}
+          onChange={handleAmountInputChange}
+        />
         <Button
-          disabled={!write || isTransactionLoading}
-          onClick={handleAltaPrestamistaClick}
+          disabled={!to || !amount || isTransactionLoading}
           isLoading={isTransactionLoading}
+          onClick={() => write?.()}
         >
-          {isTransactionLoading ? 'Dando de alta prestamista...' : 'Dar de alta prestamista'}
+          {isTransactionLoading ? 'Transfiriendo BM Tokens...' : 'Transferir BM Tokens'}
         </Button>
       </form>
     </section>
-  );
+  )
 }
-
-export default AltaPrestamista;
