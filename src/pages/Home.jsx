@@ -1,5 +1,5 @@
 import { Owner } from '../components'
-import AltaPrestamista from '../components/AltaPrestamista'
+import { AltaPrestamista } from '../components'
 
 export default function Home() {
   return (
