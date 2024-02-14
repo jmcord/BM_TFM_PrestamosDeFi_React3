@@ -1,5 +1,6 @@
 import { AprobarPrestamo, ObtenerPrestamosPorPrestatario, Owner, SolicitarPrestamo } from '../components'
 import { AltaPrestamista, AltaCliente, DepositarGarantia } from '../components'
+import ReembolsarPrestamo from '../components/ReembolsarPrestamo'
 
 export default function Home() {
   return (
@@ -12,7 +13,8 @@ export default function Home() {
       <DepositarGarantia />
       <SolicitarPrestamo />
       <AprobarPrestamo />
-      <ObtenerPrestamosPorPrestatario />
+      <ReembolsarPrestamo />
+      
  
     </section>
   )
