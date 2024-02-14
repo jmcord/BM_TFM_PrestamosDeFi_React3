@@ -11,8 +11,8 @@ export default function Home() {
       <AltaCliente />
       <DepositarGarantia />
       <SolicitarPrestamo />
-      <ObtenerPrestamosPorPrestatario />
       <AprobarPrestamo />
+      <ObtenerPrestamosPorPrestatario />
  
     </section>
   )
