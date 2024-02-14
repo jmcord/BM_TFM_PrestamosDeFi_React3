@@ -1,4 +1,4 @@
-import { Owner } from '../components'
+import { ObtenerPrestamosPorPrestatario, Owner } from '../components'
 import { AltaPrestamista, AltaCliente, DepositarGarantia } from '../components'
 
 export default function Home() {
@@ -10,6 +10,7 @@ export default function Home() {
       <AltaPrestamista />
       <AltaCliente />
       <DepositarGarantia />
+
  
     </section>
   )

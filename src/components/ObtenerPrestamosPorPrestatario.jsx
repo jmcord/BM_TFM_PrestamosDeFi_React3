@@ -1,38 +1,46 @@
-import React, { useState } from 'react';
-import { Button, Title } from './ui';
-import { useContractCall } from 'wagmi';
-import { blockmakerTokenABI } from '../contracts/ABIs';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function ObtenerPrestamosPorPrestatario({ prestatario }) {
   const [prestamos, setPrestamos] = useState([]);
   const [error, setError] = useState('');
 
-  const obtenerPrestamos = async () => {
-    try {
-      const prestamosIds = await contract.methods.obtenerPrestamosPorPrestatario(prestatario).call();
-      setPrestamos(prestamosIds);
-      setError('');
-    } catch (err) {
-      setError('Error al obtener los préstamos del prestatario');
-    }
-  };
+  useEffect(() => {
+    const obtenerPrestamos = async () => {
+      try {
+        const response = await axios.post('URL_DEL_ENDPOINT_JSON_RPC', {
+          jsonrpc: '2.0',
+          method: 'obtenerPrestamosPorPrestatario',
+          params: [prestatario],
+          id: 1,
+        });
+
+        if (response.data.error) {
+          setError(response.data.error.message);
+        } else {
+          setPrestamos(response.data.result);
+        }
+      } catch (error) {
+        setError('Error al obtener los préstamos');
+        console.error('Error:', error);
+      }
+    };
+
+    obtenerPrestamos();
+  }, [prestatario]);
 
   return (
-    <section className="bg-white p-4 border shadow rounded-md">
-      <Title>Prestamos del Prestatario</Title>
-      <div>
-        <Button onClick={obtenerPrestamos}>Obtener Prestamos</Button>
-      </div>
-      <div>
-        {error && <p className="text-red-500">{error}</p>}
-        <ul>
-          {prestamos.map((id, index) => (
-            <li key={index}>{id}</li>
-          ))}
-        </ul>
-      </div>
-    </section>
+    <div>
+      <h2>Prestamos de {prestatario}</h2>
+      {error && <p>Error: {error}</p>}
+      <ul>
+        {prestamos.map((prestamo, index) => (
+          <li key={index}>{prestamo}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
 export default ObtenerPrestamosPorPrestatario;
+
