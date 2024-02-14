@@ -1,5 +1,6 @@
+
+
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 function ObtenerPrestamosPorPrestatario({ prestatario }) {
   const [prestamos, setPrestamos] = useState([]);
@@ -8,17 +9,25 @@ function ObtenerPrestamosPorPrestatario({ prestatario }) {
   useEffect(() => {
     const obtenerPrestamos = async () => {
       try {
-        const response = await axios.post('URL_DEL_ENDPOINT_JSON_RPC', {
-          jsonrpc: '2.0',
-          method: 'obtenerPrestamosPorPrestatario',
-          params: [prestatario],
-          id: 1,
+        const response = await fetch('URL_DEL_ENDPOINT_JSON_RPC', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method: 'obtenerPrestamosPorPrestatario',
+            params: [prestatario],
+            id: 1,
+          }),
         });
 
-        if (response.data.error) {
-          setError(response.data.error.message);
+        const responseData = await response.json();
+
+        if (responseData.error) {
+          setError(responseData.error.message);
         } else {
-          setPrestamos(response.data.result);
+          setPrestamos(responseData.result);
         }
       } catch (error) {
         setError('Error al obtener los préstamos');
@@ -43,4 +52,3 @@ function ObtenerPrestamosPorPrestatario({ prestatario }) {
 }
 
 export default ObtenerPrestamosPorPrestatario;
-
