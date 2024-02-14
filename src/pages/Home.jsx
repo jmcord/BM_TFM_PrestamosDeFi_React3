@@ -10,7 +10,7 @@ export default function Home() {
       <AltaPrestamista />
       <AltaCliente />
       <DepositarGarantia />
-
+      <ObtenerPrestamosPorPrestatario />
  
     </section>
   )
