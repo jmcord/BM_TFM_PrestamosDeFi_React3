@@ -1,5 +1,5 @@
 import { Owner } from '../components'
-import { AltaPrestamista, AltaCliente } from '../components'
+import { AltaPrestamista, AltaCliente, DepositarGarantia } from '../components'
 
 export default function Home() {
   return (
@@ -9,6 +9,7 @@ export default function Home() {
       <Owner />
       <AltaPrestamista />
       <AltaCliente />
+      <DepositarGarantia />
  
     </section>
   )

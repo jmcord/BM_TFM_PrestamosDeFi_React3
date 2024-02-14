@@ -3,3 +3,5 @@ export { default as Footer } from './Footer';
 export { default as Owner } from './Owner';
 export { default as AltaCliente } from './AltaCliente';
 export { default as AltaPrestamista } from './AltaPrestamista';
+export { default as DepositarGarantia } from './DepositarGarantia';
+export { default as ObtenerPrestamosPorPrestatario } from './ObtenerPrestamosPorPrestatario';
