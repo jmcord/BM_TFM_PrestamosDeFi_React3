@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
 import { Button, TextInput, Title } from './ui';
-import { useContractWrite, useWaitForTransaction } from 'wagmi';
+import { useState, useEffect } from 'react';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { blockmakerTokenABI } from '../contracts/ABIs';
 
-export default function AltaCliente({ empleadoPrestamista }) {
-  const [nuevoCliente, setNuevoCliente] = useState('');
-  const [error, setError] = useState('');
+export default function MintTokensForm() {
+  const [to, setTo] = useState('');
+  const [amount, setAmount] = useState('');
 
-  const { config } = useContractWrite({
+  const { config } = usePrepareContractWrite({
     address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
     abi: blockmakerTokenABI,
     functionName: 'altaCliente',
-    args: [nuevoCliente],
-    signer: empleadoPrestamista
+    args: [to]
   });
 
   const { data: writeData, write } = useContractWrite(config);
@@ -25,36 +24,36 @@ export default function AltaCliente({ empleadoPrestamista }) {
     hash: writeData?.hash
   });
 
-  const handleAltaCliente = () => {
-    if (!nuevoCliente) {
-      setError('Por favor, introduce una dirección válida');
-      return;
-    }
-    setError('');
-    write();
+  const handlerToInputChange = (event) => {
+    setTo(event.target.value);
+  };
+
+  const handlerAmountInputChange = (event) => {
+    setAmount(event.target.value);
   };
 
   useEffect(() => {
     if (isTransactionSuccess) {
-      setNuevoCliente('');
-      console.log('Transacción completada con éxito!');
+      setTo('');
+      setAmount('');
+      console.log('Transacción Completada!');
     }
     if (isTransactionError) {
-      console.log('Transacción fallida');
+      console.log('Transacción Fallida!');
     }
   }, [isTransactionSuccess, isTransactionError]);
 
   return (
     <section className="bg-white p-4 border shadow rounded-md">
-      <Title>Alta de Cliente</Title>
+      <Title>MintForm</Title>
 
       <form className="grid gap-4">
-        <TextInput type="text" placeholder="Dirección del nuevo cliente" value={nuevoCliente} onChange={(e) => setNuevoCliente(e.target.value)} />
-        {error && <p className="text-red-500">{error}</p>}
-        <Button disabled={!write || isTransactionLoading} onClick={handleAltaCliente} isLoading={isTransactionLoading}>
-          {isTransactionLoading ? 'Dando de alta cliente...' : 'Dar de alta cliente'}
+        <TextInput type="text" placeholder="address" value={to} onChange={handlerToInputChange} />
+
+        <Button disabled={!write || isTransactionLoading} onClick={() => write?.()} isLoading={isTransactionLoading}>
+          {isTransactionLoading ? 'Dando de alta...' : 'Dar de alta Cliente'}
         </Button>
       </form>
     </section>
   );
-}
+} 
