@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button, Title } from './ui';
 import { useContractWrite, useWaitForTransaction, usePrepareContractWrite } from 'wagmi';
 import { blockmakerTokenABI } from '../contracts/ABIs';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ReembolsarPrestamo() {
   const [id, setId] = useState('');
-  const [error, setError] = useState('');
 
   const { config } = usePrepareContractWrite({
     address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
@@ -24,24 +25,23 @@ function ReembolsarPrestamo() {
     hash: writeData?.hash
   });
 
-  const handleReembolsoPrestamo = () => {
-    if (!id) {
-      setError('Por favor, introduce el ID del préstamo');
-      return;
-    }
-    setError('');
-    write();
-  };
-
   useEffect(() => {
     if (isTransactionSuccess) {
+      toast.success('¡Reembolso del préstamo completado con éxito!');
       setId('');
-      console.log('Reembolso del préstamo completado con éxito!');
     }
     if (isTransactionError) {
-      console.log('Error al reembolsar el préstamo');
+      toast.error('Error al reembolsar el préstamo');
     }
   }, [isTransactionSuccess, isTransactionError]);
+
+  const handleReembolsoPrestamo = () => {
+    if (!id) {
+      toast.error('Por favor, introduce el ID del préstamo');
+      return;
+    }
+    write();
+  };
 
   return (
     <section className="bg-white p-4 border shadow rounded-md">
@@ -49,7 +49,6 @@ function ReembolsarPrestamo() {
 
       <form className="grid gap-4">
         <input type="text" placeholder="ID del Préstamo" value={id} onChange={(e) => setId(e.target.value)} />
-        {error && <p className="text-red-500">{error}</p>}
         <Button disabled={!write || isTransactionLoading} onClick={handleReembolsoPrestamo} isLoading={isTransactionLoading}>
           {isTransactionLoading ? 'Enviando reembolso...' : 'Reembolsar Préstamo'}
         </Button>
