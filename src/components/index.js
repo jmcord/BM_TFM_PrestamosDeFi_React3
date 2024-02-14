@@ -5,3 +5,5 @@ export { default as AltaCliente } from './AltaCliente';
 export { default as AltaPrestamista } from './AltaPrestamista';
 export { default as DepositarGarantia } from './DepositarGarantia';
 export { default as ObtenerPrestamosPorPrestatario } from './ObtenerPrestamosPorPrestatario';
+export { default as SolicitarPrestamo } from './SolicitarPrestamo';
+export { default as AprobarPrestamo } from './AprobarPrestamo';
