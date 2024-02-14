@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { blockmakerTokenABI } from '../contracts/ABIs';
 
-export default function MintTokensForm() {
+export default function AltaCliente() {
   const [to, setTo] = useState('');
-  const [amount, setAmount] = useState('');
+
 
   const { config } = usePrepareContractWrite({
     address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
@@ -45,7 +45,7 @@ export default function MintTokensForm() {
 
   return (
     <section className="bg-white p-4 border shadow rounded-md">
-      <Title>MintForm</Title>
+      <Title>AltaForm</Title>
 
       <form className="grid gap-4">
         <TextInput type="text" placeholder="address" value={to} onChange={handlerToInputChange} />
