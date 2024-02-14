@@ -1,53 +1,41 @@
-
-
 import React, { useState, useEffect } from 'react';
+import { Button, TextInput, Title } from './ui';
+import { useContractRead } from 'wagmi'; // Asegúrate de importar correctamente la función useContractCall
+import { blockmakerTokenABI } from '../contracts/ABIs';
 
 function ObtenerPrestamosPorPrestatario({ prestatario }) {
-  const [prestamos, setPrestamos] = useState([]);
+  const [prestamosIds, setPrestamosIds] = useState([]);
   const [error, setError] = useState('');
 
+  const obtenerPrestamos = useContractRead({
+    abi: blockmakerTokenABI,
+    address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
+    method: 'obtenerPrestamosPorPrestatario',
+    args: [prestatario]
+  });
+
   useEffect(() => {
-    const obtenerPrestamos = async () => {
-      try {
-        const response = await fetch('URL_DEL_ENDPOINT_JSON_RPC', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            jsonrpc: '2.0',
-            method: 'obtenerPrestamosPorPrestatario',
-            params: [prestatario],
-            id: 1,
-          }),
-        });
-
-        const responseData = await response.json();
-
-        if (responseData.error) {
-          setError(responseData.error.message);
-        } else {
-          setPrestamos(responseData.result);
-        }
-      } catch (error) {
-        setError('Error al obtener los préstamos');
-        console.error('Error:', error);
-      }
-    };
-
-    obtenerPrestamos();
-  }, [prestatario]);
+    if (obtenerPrestamos.error) {
+      setError(obtenerPrestamos.error.message);
+    } else {
+      setPrestamosIds(obtenerPrestamos.result || []);
+    }
+  }, [obtenerPrestamos]);
 
   return (
-    <div>
-      <h2>Prestamos de {prestatario}</h2>
-      {error && <p>Error: {error}</p>}
-      <ul>
-        {prestamos.map((prestamo, index) => (
-          <li key={index}>{prestamo}</li>
-        ))}
-      </ul>
-    </div>
+    <section className="bg-white p-4 border shadow rounded-md">
+      <Title>Obtener Préstamos por Prestatario</Title>
+
+      <form className="grid gap-4">
+        <TextInput type="text" placeholder="Prestatario" value={prestatario} disabled />
+        {error && <p className="text-red-500">{error}</p>}
+        <ul>
+          {prestamosIds.map((id, index) => (
+            <li key={index}>ID: {id}</li>
+          ))}
+        </ul>
+      </form>
+    </section>
   );
 }
 
