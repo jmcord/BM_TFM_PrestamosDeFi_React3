@@ -4,24 +4,12 @@ import { useContractWrite, useWaitForTransaction, usePrepareContractWrite } from
 import { blockmakerTokenABI } from '../contracts/ABIs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-<ToastContainer
-  position="top-right"
-  autoClose={5000}
-  hideProgressBar={false}
-  newestOnTop={false}
-  closeOnClick
-  rtl={false}
-  pauseOnFocusLoss
-  draggable
-  pauseOnHover
-  theme="light"
-  transition: Bounce,
-/>
-{/* Same as */}
-<ToastContainer />
+
 function ReembolsarPrestamo() {
   const [id, setId] = useState('');
+
   const notify = () => toast("Wow so easy!");
+
   const { config } = usePrepareContractWrite({
     address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
     abi: blockmakerTokenABI,
@@ -59,19 +47,30 @@ function ReembolsarPrestamo() {
 
   return (
     <div>
-      <button onClick={notify}>Notify!</button>
-      <ToastContainer />
-    </div>
-    <section className="bg-white p-4 border shadow rounded-md">
-      <Title>Reembolso de Préstamo</Title>
+      <button onClick={notify}>Reembolsar!</button>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <section className="bg-white p-4 border shadow rounded-md">
+        <Title>Reembolso de Préstamo</Title>
 
-      <form className="grid gap-4">
-        <input type="text" placeholder="ID del Préstamo" value={id} onChange={(e) => setId(e.target.value)} />
-        <Button disabled={!write || isTransactionLoading} onClick={handleReembolsoPrestamo} isLoading={isTransactionLoading}>
-          {isTransactionLoading ? 'Enviando reembolso...' : 'Reembolsar Préstamo'}
-        </Button>
-      </form>
-    </section>
+        <form className="grid gap-4">
+          <input type="text" placeholder="ID del Préstamo" value={id} onChange={(e) => setId(e.target.value)} />
+          <Button disabled={!write || isTransactionLoading} onClick={handleReembolsoPrestamo} isLoading={isTransactionLoading}>
+            {isTransactionLoading ? 'Enviando reembolso...' : 'Reembolsar Préstamo'}
+          </Button>
+        </form>
+      </section>
+    </div>
   );
 }
 

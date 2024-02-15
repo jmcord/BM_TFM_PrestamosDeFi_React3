@@ -14,6 +14,7 @@ export default function Home() {
       <SolicitarPrestamo />
       <AprobarPrestamo />
       <ReembolsarPrestamo />
+      <ObtenerPrestamosPorPrestatario />
       
  
     </section>
