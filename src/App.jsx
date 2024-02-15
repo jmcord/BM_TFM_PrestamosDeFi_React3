@@ -2,7 +2,7 @@ import { WagmiConfig } from 'wagmi'
 import { ConnectKitProvider } from 'connectkit'
 import { config } from './config/wagmi'
 import { AppLayout } from './components/ui/layouts'
-import { Home } from './pages'
+import { Home, Home2 } from './pages'
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
       <ConnectKitProvider mode="light">
         <AppLayout>
           <Home />
+          <Home2 />
         </AppLayout>
       </ConnectKitProvider>
     </WagmiConfig>
