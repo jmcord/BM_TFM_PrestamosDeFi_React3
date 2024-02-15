@@ -45,9 +45,14 @@ function ReembolsarPrestamo() {
     write();
   };
 
+  const handleButtonClick = () => {
+    notify(); // Llama a la función de notificación al hacer clic en el botón "Reembolsar!"
+    handleReembolsoPrestamo(); // Llama a la función para reembolsar el préstamo
+  };
+
   return (
     <div>
-      <button onClick={notify}>Reembolsar!</button>
+      <button onClick={handleButtonClick}>Reembolsar!</button>
       <ToastContainer
         position="top-right"
         autoClose={5000}
