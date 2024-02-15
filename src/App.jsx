@@ -10,7 +10,6 @@ function App() {
       <ConnectKitProvider mode="light">
         <AppLayout>
           <Home />
-          <Home2 />
         </AppLayout>
       </ConnectKitProvider>
     </WagmiConfig>
