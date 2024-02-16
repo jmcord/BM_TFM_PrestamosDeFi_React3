@@ -1,5 +1,5 @@
 import React from 'react';
-import { AprobarPrestamo, ObtenerPrestamosPorPrestatario, Owner, SolicitarPrestamo } from '../components';
+import { AprobarPrestamo, ObtenerPrestamosPorPrestatario, Owner, SolicitarPrestamo, ObtenerDetalleDePrestamo } from '../components';
 import { AltaPrestamista, AltaCliente, DepositarGarantia, LiquidarGarantia } from '../components';
 import ReembolsarPrestamo from '../components/ReembolsarPrestamo';
 
@@ -13,13 +13,13 @@ export default function Home() {
           <Owner />
           <AltaPrestamista />
           <AltaCliente />
-          <h1>ALTAS</h1>
           <DepositarGarantia />
           <SolicitarPrestamo />
           <AprobarPrestamo />
           <ReembolsarPrestamo />
           <LiquidarGarantia />
           <ObtenerPrestamosPorPrestatario />
+          <ObtenerDetalleDePrestamo />
         </div>
 
     </section>
