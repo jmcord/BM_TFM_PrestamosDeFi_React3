@@ -12,7 +12,7 @@ function App() {
     <WagmiConfig config={config}>
       <ConnectKitProvider mode="light">
         <AppLayout>
-          <Home />
+            <Home />
         </AppLayout>
       </ConnectKitProvider>
     </WagmiConfig>
