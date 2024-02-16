@@ -1,31 +1,21 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { WagmiConfig } from 'wagmi';
-import { ConnectKitProvider } from 'connectkit';
-import { config } from './config/wagmi';
-import { AppLayout } from './components/ui/layouts';
-import Home from './pages/Home';
-import About from './pages/About';
-import NavBar from './pages/NavBar';
+// Importamos Routes y Route de react-router-dom
+import { Route, Routes } from 'react-router-dom'
+import '../index.css'
+import About from './pages/About'
+//import Contact from './pages/Contact'
+import Home from './pages/Home'
+//import NotFound from './pages/NotFound'
 
-function App() {
+export default function App() {
   return (
-    <Router>
-      <WagmiConfig config={config}>
-        <ConnectKitProvider mode="light">
-          <AppLayout>
-            <NavBar />
-            <Routes>
-              <Route exact path="/" component={Home} />
-              <Route path="/about" component={About} />
-              {/* Asegúrate de tener una ruta definida para cualquier otra dirección */}
-              {/* Por ejemplo, puedes redirigir a la página de inicio si la ruta no se encuentra */}
-              <Route path="*" component={Home} />
-            </Routes>
-          </AppLayout>
-        </ConnectKitProvider>
-      </WagmiConfig>
-    </Router>
-  );
+    // Definimos las Rutas con el componente Padre Routes
+    <Routes>
+      
+      <Route index element={<Home />} />
+     
+      <Route path="about" element={<About />} />
+ 
+   
+    </Routes>
+  )
 }
-
-export default App;

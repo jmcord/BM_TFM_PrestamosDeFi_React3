@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './NavBar';
 
 function About() {
   return (
@@ -27,6 +28,7 @@ function About() {
           GitHub
         </a>
       </div>
+      <NavBar />
     </div>
   );
 }
