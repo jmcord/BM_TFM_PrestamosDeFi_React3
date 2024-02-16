@@ -12,7 +12,7 @@ function About() {
       </p>
       <div className="flex">
         <a
-          href="[Tu LinkedIn]"
+          href="www.linkedin.com/in/jmcordz"
           target="_blank"
           rel="noopener noreferrer"
           className="mr-4"
@@ -20,7 +20,7 @@ function About() {
           LinkedIn
         </a>
         <a
-          href="[Tu GitHub]"
+          href="https://github.com/jmcord"
           target="_blank"
           rel="noopener noreferrer"
         >
