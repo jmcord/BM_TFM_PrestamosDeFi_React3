@@ -4,7 +4,7 @@ import { Button, Title } from './ui';
 import { AiFillBoxPlot } from 'react-icons/ai';
 import { blockmakerTokenABI } from '../contracts/ABIs';
 
-function DetallePrestamo() {
+function ObtenerDetalleDePrestamo() {
   const [prestatario, setPrestatario] = useState('');
   const [idPrestamo, setIdPrestamo] = useState('');
   const [prestamo, setPrestamo] = useState(null);
@@ -67,4 +67,4 @@ function DetallePrestamo() {
   );
 }
 
-export default DetallePrestamo;
+export default ObtenerDetalleDePrestamo;
