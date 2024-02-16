@@ -13,6 +13,7 @@ export default function Home() {
           <Owner />
           <AltaPrestamista />
           <AltaCliente />
+          <h1>ALTAS</h1>
           <DepositarGarantia />
           <SolicitarPrestamo />
           <AprobarPrestamo />
