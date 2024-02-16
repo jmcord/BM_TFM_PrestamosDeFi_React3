@@ -6,7 +6,7 @@ function About() {
     <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Sobre mí</h1>
       <p className="mb-4">
-        ¡Hola! Soy [Tu Nombre], un apasionado desarrollador de software con experiencia en [Áreas de experiencia]. Me encanta aprender y trabajar en proyectos desafiantes que me permitan crecer profesionalmente.
+        ¡Hola! Soy Jose María, un apasionado desarrollador de software con experiencia en Machine Learning y Data Science. Me encanta aprender y trabajar en proyectos desafiantes que me permitan crecer profesionalmente.
       </p>
       <p className="mb-4">
         Puedes encontrarme en LinkedIn y GitHub:
