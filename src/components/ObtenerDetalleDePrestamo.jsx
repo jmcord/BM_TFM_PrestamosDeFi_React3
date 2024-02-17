@@ -12,7 +12,7 @@ function ObtenerDetalleDePrestamo() {
 
   const obtenerDetalleDePrestamoCall = useContractRead({
     abi: blockmakerTokenABI, 
-    address: import.meta.VITE_TOKEN_CONTRACT_ADDRESS, 
+    address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS, 
     method: 'obtenerDetalleDePrestamo',
     args: [prestatario, idPrestamo],
   });

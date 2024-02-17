@@ -11,7 +11,7 @@ function ObtenerPrestamosPorPrestatario() {
 
   const obtenerPrestamosPorPrestatarioCall = useContractRead({
     abi: blockmakerTokenABI,
-    address: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID,
+    address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
     method: 'obtenerPrestamosPorPrestatario',
     args: [prestatario],
   });
