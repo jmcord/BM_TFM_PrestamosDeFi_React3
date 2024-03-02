@@ -3,7 +3,7 @@ import { ConnectKitButton } from 'connectkit';
 
 export default function Header() {
   return (
-    <header className="py-2 px-3 sm:py-4 sm:px-8 flex justify-between items-center bg-white border-b shadow-xs" style={{ backgroundImage: 'url(/public/bc.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+    <header className="py-2 px-3 sm:py-4 sm:px-8 flex justify-between items-center bg-white border-b shadow-xs" style={{ backgroundImage: 'url(/bc.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
       {/* Logo para versión móvil */}
       <img src="/bm.png" alt="blockmaker-logo" width={47} className="sm:hidden" />
       {/* Logo para versión de escritorio */}
