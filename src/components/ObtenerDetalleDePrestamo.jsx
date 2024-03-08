@@ -21,6 +21,7 @@ function ObtenerDetalleDePrestamo() {
     setLoading(true);
     try {
       const detalle = await obtenerDetalleDePrestamoCall;
+      console.log("Detalle del préstamo recibido:", detalle); // Logging detail here
       setPrestamo(detalle);
     } catch (error) {
       console.error('Error al obtener detalle del préstamo:', error);
@@ -68,3 +69,4 @@ function ObtenerDetalleDePrestamo() {
 }
 
 export default ObtenerDetalleDePrestamo;
+

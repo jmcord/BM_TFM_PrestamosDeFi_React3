@@ -6,11 +6,11 @@ import ReembolsarPrestamo from '../components/ReembolsarPrestamo';
 export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-20 px-20">
-      
-        <h1>Prestamos DeFi</h1>
-
+      <h1>Prestamos DeFi</h1>
+      <Owner />
+      <div className="flex flex-wrap justify-center gap-4">
         <div className="flex flex-wrap justify-center gap-4">
-          <Owner />
+          
           <AltaPrestamista />
           <AltaCliente />
           <DepositarGarantia />
@@ -21,7 +21,7 @@ export default function Home() {
           <ObtenerPrestamosPorPrestatario />
           <ObtenerDetalleDePrestamo />
         </div>
-
+      </div>
     </section>
   );
 }
