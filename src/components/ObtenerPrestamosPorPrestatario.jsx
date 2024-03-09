@@ -1,59 +1,91 @@
 import React, { useState, useEffect } from 'react';
-import { Title } from './ui';
-import { blockmakerTokenABI } from '../contracts/ABIs';
+import { Button, Title } from './ui';
 import { useContractRead } from 'wagmi';
-import { AiFillBoxPlot } from 'react-icons/ai';
+import { blockmakerTokenABI } from '../contracts/ABIs';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const contratoAddress = import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS;
+const functionName = 'obtenerPrestamosPorPrestatario';
 
 function ObtenerPrestamosPorPrestatario() {
   const [prestatario, setPrestatario] = useState('');
-  const [prestamos, setPrestamos] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [prestamos, setPrestamos] = useState([]);
+  const [error, setError] = useState(null);
 
-  const obtenerPrestamosPorPrestatarioCall = useContractRead({
+  const notify = () => toast("Wow so easy!");
+
+  const { data: prestamosData, loading: prestamosLoading, error: prestamosError } = useContractRead({
+    address: contratoAddress,
     abi: blockmakerTokenABI,
-    address: import.meta.env.VITE_TOKEN_CONTRACT_ADDRESS,
-    method: 'obtenerPrestamosPorPrestatario',
-    args: [prestatario],
+    functionName: functionName,
+    args: [prestatario]
   });
 
   useEffect(() => {
-    if (Array.isArray(obtenerPrestamosPorPrestatarioCall)) {
-      setPrestamos(obtenerPrestamosPorPrestatarioCall);
+    if (prestatario !== '') {
+      setLoading(true);
+      setError(null);
+    }
+  }, [prestatario]);
+
+  useEffect(() => {
+    if (prestamosData !== undefined) {
+      setPrestamos(prestamosData);
       setLoading(false);
     }
-  }, [obtenerPrestamosPorPrestatarioCall]);
+    if (prestamosError) {
+      console.error('Error al obtener préstamos:', prestamosError);
+      setError('Error al obtener préstamos. Verifica la dirección del prestatario y vuelve a intentarlo.');
+      setLoading(false);
+    }
+  }, [prestamosData, prestamosError]);
 
-  const handleInputChange = (event) => {
+  const handlePrestatarioChange = (event) => {
     setPrestatario(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setLoading(true);
+  const handleButtonClick = () => {
+    notify(); // Llama a la función de notificación al hacer clic en el botón "Obtener Préstamos"
   };
 
   return (
     <div>
-      <h2><AiFillBoxPlot /> Prestamos por Prestatario</h2>
+      <button onClick={handleButtonClick}>Obtener Préstamos</button>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <section className="bg-white p-4 border shadow rounded-md">
-        <Title>Ingrese el prestatario:</Title>
-        <form onSubmit={handleSubmit} className="grid gap-4">
-          <input 
-            type="text" 
-            placeholder="Dirección del prestatario" 
-            value={prestatario} 
-            onChange={handleInputChange} 
+        <Title>Obtener Préstamos por Prestatario</Title>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Dirección del Prestatario"
+            value={prestatario}
+            onChange={handlePrestatarioChange}
           />
-          <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md">Buscar</button>
-        </form>
-        {loading ? (
-          <p>Cargando préstamos...</p>
-        ) : (
+          <Button disabled={loading} onClick={handleButtonClick} isLoading={loading}>
+            {loading ? 'Cargando...' : 'Obtener Préstamos'}
+          </Button>
+        </div>
+        {error && <p>Error: {error}</p>}
+        {prestamos.length > 0 && (
           <div>
-            <Title>Prestamos de {prestatario}</Title>
+            <h3>Préstamos del Prestatario:</h3>
             <ul>
-              {prestamos.map((prestamo, index) => (
-                <li key={index}>{prestamo}</li>
+              {prestamos.map((id, index) => (
+                <li key={index}>ID del préstamo: {id}</li>
               ))}
             </ul>
           </div>
